@@ -1,5 +1,5 @@
 import styles from './styles.module.css';
 
 export const Bar = () => {
-    return <div></div>
+    return <div className={styles.main}></div>
 }
