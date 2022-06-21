@@ -1,3 +1,4 @@
+import { BattleMenu } from 'components/BattleMenu';
 import { PlayerSummary } from 'components/PlayerSummary';
 import { useState } from 'react';
 import { opponentStats, playerStats } from 'shared/characters';
@@ -8,7 +9,7 @@ export const Battle = ({onStartClick}) => {
     const [opponentHealth, setOpponentHealth] = useState(opponentStats.maxHealth);
     const [playerHealth, setplayerHealth] = useState(playerStats.maxHealth);
     return (
-        <div className={styles.main}> Battle Menu Component
+        <>
             <div className={styles.opponent}>
                 <div className={styles.summary}>
                     <PlayerSummary 
@@ -18,6 +19,20 @@ export const Battle = ({onStartClick}) => {
                         health = {opponentHealth}
                         maxHealth = {opponentStats.maxHealth}
                     />
+                </div>
+            </div>
+
+            <div className={styles.characters}>
+                <div className={styles.gameHeader}>
+                    {playerStats.name} vs {opponentStats.name}
+                </div>
+                <div className={styles.gameImages}>
+                    <div className={styles.playerSprite}>
+                        <img src={playerStats.img} alt={playerStats.name} />
+                    </div>
+                    <div className={styles.opponentSprite}>
+                        <img src={opponentStats.img} alt= {opponentStats.name}/>
+                    </div>
                 </div>
             </div>
 
@@ -31,8 +46,19 @@ export const Battle = ({onStartClick}) => {
                         maxHealth = {playerStats.maxHealth}
                     />
                 </div>
+
+                <div className={styles.hud}>
+                    <div className={styles.hudChild}>
+                        <BattleMenu 
+                            onAttack={()=> console.log(playerStats.attack)}
+                            onMagic={()=> console.log(playerStats.magic)}
+                            onHeal={()=> console.log(playerStats.maxHealth)}
+                        />
+                    </div>
+                </div> 
             </div>
-        </div>
             
+         
+        </>         
         )
 }
