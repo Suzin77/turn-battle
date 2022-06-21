@@ -1,4 +1,4 @@
-import styles from './styles.nodule.css';
+import styles from './styles.module.css';
 
 export const Bar = () => {
     return <div></div>
