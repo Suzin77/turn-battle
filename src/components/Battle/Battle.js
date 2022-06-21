@@ -1,3 +1,4 @@
+import { BattleAnnouncer } from 'components/BattleAnnouncer';
 import { BattleMenu } from 'components/BattleMenu';
 import { PlayerSummary } from 'components/PlayerSummary';
 import { useState } from 'react';
@@ -8,6 +9,8 @@ export const Battle = ({onStartClick}) => {
 
     const [opponentHealth, setOpponentHealth] = useState(opponentStats.maxHealth);
     const [playerHealth, setplayerHealth] = useState(playerStats.maxHealth);
+
+    const [announceMessage, setAnnounceMessage] = useState('');
     return (
         <>
             <div className={styles.opponent}>
@@ -48,6 +51,11 @@ export const Battle = ({onStartClick}) => {
                 </div>
 
                 <div className={styles.hud}>
+                    <div className={styles.hudChild}>
+                        <BattleAnnouncer 
+                            message = {announceMessage || `what will ${playerStats.name} do?`}
+                        />
+                    </div>
                     <div className={styles.hudChild}>
                         <BattleMenu 
                             onAttack={()=> console.log(playerStats.attack)}
