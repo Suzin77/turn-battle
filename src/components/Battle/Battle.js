@@ -1,16 +1,33 @@
 import { BattleAnnouncer } from 'components/BattleAnnouncer';
 import { BattleMenu } from 'components/BattleMenu';
 import { PlayerSummary } from 'components/PlayerSummary';
-import { useState } from 'react';
+import { useBattleSequence } from 'hooks/useBattleSequence';
+import { useEffect, useState } from 'react';
+import { useIAOpponent } from 'hooks/useIAOpponent';
 import { opponentStats, playerStats } from 'shared/characters';
 import styles from './styles.module.css';
 
 export const Battle = ({onStartClick}) => {
 
-    const [opponentHealth, setOpponentHealth] = useState(opponentStats.maxHealth);
-    const [playerHealth, setplayerHealth] = useState(playerStats.maxHealth);
+    const [sequence, setSequence] = useState({});
+    const {
+        turn,
+        inSequence,
+        playerHealth,
+        opponentHealth,
+        announceMessage,
+        playerAnimation,
+        opponentAnimation
+    } = useBattleSequence(sequence);
 
-    const [announceMessage, setAnnounceMessage] = useState('');
+    const aiChoice = useIAOpponent(turn);
+
+    useEffect(()=>{
+        if(aiChoice && turn === 1 && !inSequence){
+            setSequence({turn, aiChoice})
+        }
+    }, [turn, aiChoice, inSequence]);
+
     return (
         <>
             <div className={styles.opponent}>
@@ -31,10 +48,18 @@ export const Battle = ({onStartClick}) => {
                 </div>
                 <div className={styles.gameImages}>
                     <div className={styles.playerSprite}>
-                        <img src={playerStats.img} alt={playerStats.name} />
+                        <img 
+                            src={playerStats.img} 
+                            alt={playerStats.name}
+                            className={styles[playerAnimation]}
+                        />
                     </div>
                     <div className={styles.opponentSprite}>
-                        <img src={opponentStats.img} alt= {opponentStats.name}/>
+                        <img 
+                            src={opponentStats.img} 
+                            alt= {opponentStats.name}
+                            className={styles[opponentAnimation]}
+                        />
                     </div>
                 </div>
             </div>
@@ -58,9 +83,9 @@ export const Battle = ({onStartClick}) => {
                     </div>
                     <div className={styles.hudChild}>
                         <BattleMenu 
-                            onAttack={()=> console.log(playerStats.attack)}
-                            onMagic={()=> console.log(playerStats.magic)}
-                            onHeal={()=> console.log(playerStats.maxHealth)}
+                            onAttack={()=> setSequence({turn, mode: 'attack'}) }
+                            onMagic={()=> setSequence({turn, mode: 'magic'})}
+                            onHeal={()=> setSequence({turn, mode: 'heal'})}
                         />
                     </div>
                 </div> 
