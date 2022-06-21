@@ -1,6 +1,6 @@
 import styles from './styles.module.css'; 
 import { useState } from 'react';
-import { StartMenu, BattleMenu } from 'components';
+import { StartMenu, Battle } from 'components';
 
 export const App = () =>  {
 
@@ -8,7 +8,7 @@ export const App = () =>  {
 
     return <div className={styles.main}>
       {mode === 'start' && <StartMenu onStartClick={() => setMode('battle')}/>}
-      {mode === 'battle' && <BattleMenu/>}
+      {mode === 'battle' && <Battle/>}
       {mode === 'gameOver' && <>gameOver mode</>}
       
     </div>
