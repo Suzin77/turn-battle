@@ -1,7 +1,7 @@
 import { Battle } from "components";
 import { useEffect, useState } from "react"
-import { opponentStats, playerStats } from "shared/characters";
-import {wait, attack, magic, heal} from "shared/helpers";
+import {wait, attack, magic, heal, opponentStats, playerStats} from "shared";
+
 
 export const useBattleSequence = (sequence) => {
 
