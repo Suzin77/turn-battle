@@ -32,17 +32,26 @@ export const useBattleSequence = (sequence) => {
 
                         await wait(1000);
 
-                        turn === 0 ? setPlayerAnimation('attack') : setOpponentAnimation('attack');
+                        turn === 0 
+                            ? setPlayerAnimation('attack') 
+                            : setOpponentAnimation('attack');
                         await wait(100);
 
-                        turn === 0 ? setPlayerAnimation('static') : setOpponentAnimation('static');
+                        turn === 0 
+                            ? setPlayerAnimation('static') 
+                            : setOpponentAnimation('static');
                         await wait(500);
 
-                        turn === 0 ? setOpponentAnimation('damage') : setPlayerAnimation('damage');
+                        turn === 0 
+                            ? setOpponentAnimation('damage') 
+                            : setPlayerAnimation('damage');
                         await wait(750);
 
-                        turn === 0 ? setOpponentAnimation('static') : setPlayerAnimation('static');
+                        turn === 0 
+                            ? setOpponentAnimation('static') 
+                            : setPlayerAnimation('static');
                         setAnnounceMessage(`${receiver.name} feld that`);
+                        
                         turn === 0 
                             ? setOpponentHealth(h => (h- damage > 0 ? h - damage : 0 )) 
                             : setPlayerHealth(h => (h- damage > 0 ? h - damage : 0 ))
