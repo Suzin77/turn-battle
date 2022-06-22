@@ -1,4 +1,3 @@
-import { Battle } from "components";
 import { useEffect, useState } from "react"
 import {wait, attack, magic, heal, opponentStats, playerStats} from "shared";
 
@@ -24,7 +23,7 @@ export const useBattleSequence = (sequence) => {
             const receiver = turn === 0 ? opponentStats : playerStats;
 
             switch (mode) {
-                case 'attack':
+                case 'attack': {
                     const damage = attack({attacker, receiver})
 
                     (async() => {
@@ -57,7 +56,7 @@ export const useBattleSequence = (sequence) => {
 
                     })();
                     break;
-            
+                }
                 default:
                     break;
             }
