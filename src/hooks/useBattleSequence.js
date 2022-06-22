@@ -66,6 +66,82 @@ export const useBattleSequence = (sequence) => {
                     })();
                     break;
                 }
+
+                case 'magic': {
+                    const damage = attack({ attacker, receiver });
+
+                    (async() => {
+                        setInSequence(true);
+                        setAnnounceMessage(`${attacker.name} has cast spell!`);
+
+                        await wait(1000);
+
+                        turn === 0 
+                            ? setPlayerAnimation('magic') 
+                            : setOpponentAnimation('magic');
+                        await wait(100);
+
+                        turn === 0 
+                            ? setPlayerAnimation('static') 
+                            : setOpponentAnimation('static');
+                        await wait(500);
+
+                        turn === 0 
+                            ? setOpponentAnimation('damage') 
+                            : setPlayerAnimation('damage');
+                        await wait(750);
+
+                        turn === 0 
+                            ? setOpponentAnimation('static') 
+                            : setPlayerAnimation('static');
+                        setAnnounceMessage(`${receiver.name} feld that`);
+
+                        turn === 0 
+                            ? setOpponentHealth(h => (h- damage > 0 ? h - damage : 0 )) 
+                            : setPlayerHealth(h => (h- damage > 0 ? h - damage : 0 ))
+                        await wait(2000);
+
+                        setAnnounceMessage(`Now it's ${receiver.name} turn ` );
+                        await wait(1500);
+
+                        setTurn(turn === 0 ? 1 : 0);
+                        setInSequence(false);
+
+                    })();
+                    break;
+                }
+
+                case 'heal': {
+                    const recovered = heal({receiver: attacker});
+
+                    (async()=>{
+                        setInSequence(true);
+                        setAnnounceMessage(`${attacker.name} choose to heal!`);
+                        await wait(1000);
+
+                        turn === 0 ? setPlayerAnimation('magic') : setOpponentAnimation('magic');
+                        await wait(1000);
+
+                        turn === 0 
+                            ? setPlayerAnimation('static') 
+                            : setOpponentAnimation('static');
+                        await wait(500);
+
+                        setAnnounceMessage(`${attacker.name} has recoverd ${recovered} health points.`);
+                        turn === 0 
+                            ? setPlayerHealth(h => h + recovered <= attacker.maxHealth ? h + recovered : attacker.maxHealth)
+                            : setOpponentHealth(h => h + recovered <= attacker.maxHealth ? h + recovered : attacker.maxHealth)
+
+                        await wait(2500);
+
+                        setAnnounceMessage(`Now it's ${receiver.name}'s turn`);
+                        await wait(500);
+
+                        setTurn(turn === 0 ? 1 : 0);
+                        setInSequence(false);
+
+                    })();
+                }
                 default:
                     break;
             }

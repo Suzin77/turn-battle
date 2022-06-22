@@ -6,8 +6,9 @@ import { useEffect, useState } from 'react';
 import { useIAOpponent } from 'hooks/useIAOpponent';
 import { opponentStats, playerStats } from 'shared/characters';
 import styles from './styles.module.css';
+import { wait } from 'shared';
 
-export const Battle = ({onStartClick}) => {
+export const Battle = ({onGameEnd}) => {
 
     const [sequence, setSequence] = useState({});
     const {
@@ -24,9 +25,18 @@ export const Battle = ({onStartClick}) => {
 
     useEffect(()=>{
         if(aiChoice && turn === 1 && !inSequence){
-            setSequence({turn, aiChoice})
+            setSequence({turn, mode: aiChoice})
         }
     }, [turn, aiChoice, inSequence]);
+
+    useEffect(()=>{
+        if(playerHealth <= 0 || opponentHealth <= 0 ) {
+            (async() => {
+                await wait(1000);
+                onGameEnd(playerHealth <= 0 ? opponentStats : playerStats)
+            })();
+        }
+    }, [playerHealth, opponentHealth, onGameEnd]);
 
     return (
         <>
