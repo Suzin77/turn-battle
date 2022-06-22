@@ -24,7 +24,7 @@ export const useBattleSequence = (sequence) => {
 
             switch (mode) {
                 case 'attack': {
-                    const damage = attack({attacker, receiver})
+                    const damage = attack({ attacker, receiver });
 
                     (async() => {
                         setInSequence(true);
@@ -51,7 +51,7 @@ export const useBattleSequence = (sequence) => {
                             ? setOpponentAnimation('static') 
                             : setPlayerAnimation('static');
                         setAnnounceMessage(`${receiver.name} feld that`);
-                        
+
                         turn === 0 
                             ? setOpponentHealth(h => (h- damage > 0 ? h - damage : 0 )) 
                             : setPlayerHealth(h => (h- damage > 0 ? h - damage : 0 ))
