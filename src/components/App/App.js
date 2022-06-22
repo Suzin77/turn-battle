@@ -1,6 +1,7 @@
 import styles from './styles.module.css'; 
 import { useState } from 'react';
 import { StartMenu, Battle } from 'components';
+import { EndMenu } from 'components/EndMenu';
 
 export const App = () =>  {
 
@@ -14,7 +15,10 @@ export const App = () =>  {
           setMode('gameOver');
         }
       }/>}
-      {mode === 'gameOver' && <>gameOver mode</>}
+      {mode === 'gameOver' && <EndMenu winner={winner} onStartClick={()=>{
+        setWinner(undefined);
+        setMode('battle');
+      }}/>}
       
     </div>
 }

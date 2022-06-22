@@ -1,6 +1,6 @@
 export const playerStats = {
     level: 44,
-    maxHealth: 177,
+    maxHealth: 80,
     name: 'Mega Man',
     img: '/assets/megaman.png',
   
@@ -12,7 +12,7 @@ export const playerStats = {
   export const opponentStats = {
     level: 44,
     name: 'Samus',
-    maxHealth: 188,
+    maxHealth: 70,
     img: '/assets/samus.png',
   
     magic: 50,
